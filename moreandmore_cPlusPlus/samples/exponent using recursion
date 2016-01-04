@@ -1,0 +1,25 @@
+Exponentiation
+
+In the case of the following exponentiation function which calculates xn (i.e. x**n), the number of calls is not equal to the parameter n but to its logarithm.
+
+Pre: x > 0
+expn(x, 0) = 1
+expn(x, n) = 1 / expn(x, -n),     if n<0
+expn(x, n) = (expn(x, n div 2))2, if n>0 and n is even
+expn(x, n) = x * expn(x, n-1),    if n>0 and n is odd
+x=[], n=[], , xn=[]
+Note the precondition, for if x is zero and n is negative then xn implies division by zero. It is fairly easy to see that this routine is correct but we prove it here to illustrate general principles. Firstly we show that the routine terminates for all values of n. If n equals zero it certainly terminates. Otherwise, if n is greater than zero then a recursive call is made with a new parameter n div 2, or with n-1, which are strictly less than the old value of n and still greater than or equal to zero. Therefore the successive values of parameter n remain greater than or equal to zero and are decreasing. Such an integer quantity cannot decrease for ever without reaching zero when the algorithm terminates. Note that a positive real valued quantity can be reduced repeatedly without ever reaching zero so such a proof cannot be based on a real quantity: eg. 1, 1/2, 1/4, 1/8, ... . If n is negative the routine calls itself with a new value, minus n, and subsequently terminates by the above. This exhausts all cases. Secondly, we show that the algorithm calculates the correct result for all n>=0:
+If n>0:
+  (i)  x-n = 1/xn   if x~=0
+ (ii)  x0 = 1
+(iii)  x2n = (xn)2
+ (iv)  x2n+1 = x*x2n
+Finally the time complexity of the routine fits the form for logarithmic complexity:
+T0 = b
+Tn = Tn/2+a   if n>0
+which has solution
+Tn = a * log(n) + b + a,   n>=1
+Many languages provide a numerical exponentiation operator `**' in which case the above algorithm is not required for numbers. However some languages do not provide this operator as standard. In addition other objects, such as matrices, can also be multiplied and therefore exponentiated. With modification, this algorithm can also be used for the latter purpose.
+The chapter on lists contains more examples of linear recursion.
+
+Note that a linear recursive routine usually has a simple iterative equivalent. The recursive step is placed within a loop and the terminating condition is used to exit from the loop.
